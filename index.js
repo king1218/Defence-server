@@ -62,14 +62,7 @@ async function run(){
             const Jobs = await cursor.toArray();
             res.send(Jobs);
         })
-        // // Delete jobs BY Admin/User:
-        //   app.delete('/jobs/:jobid', async (req, res) => {
-        //   const email = req.params.email;
-        //   const filter = {email: email};
-        //   const result = await JobCollection.deleteOne(filter);
-        //   res.send(result);
-        // })
-        // GET Job Details API:
+
         app.get('/jobs/:jobid', async (req,res)=>{
           const id=req.params.jobid;
           
@@ -126,7 +119,7 @@ async function run(){
             })
 
       // User Information getting/Profile API:
-          app.get('/user/:email', async (req, res) => {
+          app.get('/user/:email',verifyJWT, async (req, res) => {
             const email= req.params.email;
             const result = await UsersCollection.findOne({email:email});
  
