@@ -63,7 +63,16 @@ async function run(){
             const Jobs = await cursor.toArray();
             res.send(Jobs);
         })
+        //Delete Job By JobId:
+        app.delete('/deletejob/:jobid',verifyJWT, async(req,res)=>{
+          const id=req.params.jobid;
+          const filter = {_id:ObjectId(id)};
+          const result = await JobCollection.deleteOne(filter);
+          res.send(result);
 
+        })
+
+        // GET All Jobs:
         app.get('/jobs/:jobid', async (req,res)=>{
           const id=req.params.jobid;
           
@@ -224,14 +233,6 @@ app.get('/categories', async(req,res)=>{
 })
 
 
-// Delete Posted Joba:
-
-app.delete('/myjobs/:email',verifyJWT, async (req, res) => {
-  const email = req.params.email;
-  const filter = {email: email};
-  const result = await JobCollection.deleteOne(filter);
-  res.send(result);
-})
 
 // GET Candidates API:
 app.get('/candidate/:Jobid',async (req,res)=>{
